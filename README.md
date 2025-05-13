@@ -47,20 +47,15 @@ Run each task separately using TestNG:
 
 
 # Task 1
-mvn test -Dtest=com.ostad.AppTest
+
 
 # Task 2
-mvn test -Dtest=com.ostad.secondtest
-
 # Task 3
 
 4. Run All Tests Sequentially
 To run all tasks in sequence, use the central runner:
 
-bash
-Copy
-Edit
-mvn test -Dtest=com.ostad.Ostadtest
+
 📊 Reports
 📘 Extent Report
 After test execution, a file named ExtentReport.html will be generated in the root directory.
