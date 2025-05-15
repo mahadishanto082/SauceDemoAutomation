@@ -1,44 +1,71 @@
 package com.ostad;
 
-
+import io.qameta.allure.*;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentReporter;
+@Epic("Automation")
+@Feature("Login Functionality")
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
+public class Ostadtest {
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+    WebDriver driver;
 
-public class Ostadtest extends Extent {
-
-    public Ostadtest() {
-        setup(); // initializes extentreports
+    @Test(description = "Login with locked user")
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("User should see error when login is locked")
+    @Description("Login test using locked_out_user on saucedemo.com")
+    public void testLogin() {
+        setupDriver();
+        openLoginPage();
+        enterUsername("locked_out_user");
+        enterPassword("");
+        clickLoginButton();
+        waitForSeconds(1);
+        closeBrowser();
     }
-@Test
-public void testMethod() {
 
-    ExtentTest test = extentReports.createTest("OstadFinalTest");
-    test.info("This is a test");
-    WebDriverManager.chromedriver().setup();
-    test.info("WebDriverManager setup complete");
-    WebDriver driver = new ChromeDriver();
-    driver.get("https://www.saucedemo.com/");
-    test.info("Navigated to saucedemo.com");
-    
-    String title = driver.getTitle();
-    test.info("Page title is: Loginpage " + title);
-    driver.manage().window().maximize();
-    driver.findElement(By.id("user-name")).sendKeys(" locked_out_user");
-   
-    driver.findElement(By.id("password")).sendKeys("");
-    driver.findElement(By.id("login-button")).click();
-try {
-        Thread.sleep(2000);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+    @Step("Set up ChromeDriver")
+    public void setupDriver() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
     }
-    driver.quit();
+
+    @Step("Navigate to saucedemo login page")
+    public void openLoginPage() {
+        driver.get("https://www.saucedemo.com/");
+    }
+
+    @Step("Enter username: {0}")
+    public void enterUsername(String username) {
+        driver.findElement(By.id("user-name")).sendKeys(username);
+    }
+
+    @Step("Enter password: {0}")
+    public void enterPassword(String password) {
+        driver.findElement(By.id("password")).sendKeys(password);
+    }
+
+    @Step("Click on login button")
+    public void clickLoginButton() {
+        driver.findElement(By.id("login-button")).click();
+    }
+
+    @Step("Wait for {0} second(s)")
+    public void waitForSeconds(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Step("Close the browser")
+    public void closeBrowser() {
+        driver.quit();
     }
 }
