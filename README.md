@@ -3,7 +3,7 @@
 This project demonstrates UI automation testing on the [SauceDemo](https://www.saucedemo.com/) web application using **Java**, **Selenium WebDriver**, and **TestNG**. The tests are designed and structured around three tasks, each implemented in separate test classes.
 
 ## 📁 Project Structure
-
+```
 src
 └── test
 └── java
@@ -14,7 +14,7 @@ src
 ├── thirdtest.java # Task 3
 ├── Ostadtest.java # Sequential run entry point
 └── Reporter.java # Extent report setup
-
+```
 
 ## ✅ Features
 
